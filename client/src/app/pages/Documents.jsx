@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { Navbar, NewDoc, RecentDoc } from "../components";
+import { Navbar, NewDoc, RecentDoc, Modal } from "../components";
 import axios from "axios";
 
 const Home = () => {
@@ -28,7 +28,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div>
+    <div className="relative">
       <Navbar />
       <NewDoc />
       <RecentDoc />
