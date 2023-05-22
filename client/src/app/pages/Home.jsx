@@ -17,7 +17,7 @@ const Home = () => {
     <main className="">
       <section className="section-center grid gap-y-3 place-content-center h-screen">
         <img
-          src="/images/home/logo.png"
+          src="/images/Home/logo.png"
           className="w-24 justify-self-center"
           alt=""
         />
