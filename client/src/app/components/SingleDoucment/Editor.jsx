@@ -39,6 +39,7 @@ const Editor = () => {
   const [doc, setDoc] = useState({});
   const [quill, setQuill] = useState(null);
   const id = new URL(window.location.href).pathname.split("/").pop();
+  const [page, setPage] = useState(false);
 
   const getDoc = async () => {
     const url = `${process.env.REACT_APP_BASE_URL}/api/v1/docs/${user.email}/${id}`;
@@ -61,6 +62,7 @@ const Editor = () => {
         modules: { toolbar: toolbarOptions },
       });
       setQuill(newQuill);
+      setPage(true);
     }
   }, [quill]);
 
@@ -72,17 +74,26 @@ const Editor = () => {
     }
   }, [quill, doc]);
 
+  const updateInfo = async (dataToUpdate) => {
+    try {
+      await axios.patch(`${process.env.REACT_APP_BASE_URL}/api/v1/docs`, {
+        email: user.email,
+        id,
+        name: dataToUpdate.name ? dataToUpdate.name : "",
+        content: dataToUpdate.content ? dataToUpdate.content : "",
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     if (!quill) return;
 
     const handler = async () => {
       try {
         const delta = quill.getContents();
-        await axios.patch(`${process.env.REACT_APP_BASE_URL}/api/v1/docs`, {
-          email: user.email,
-          id,
-          content: JSON.stringify(delta),
-        });
+        updateInfo({ content: JSON.stringify(delta) });
       } catch (error) {
         console.log(error);
       }
@@ -93,9 +104,14 @@ const Editor = () => {
     return () => quill.off("text-change", handler);
   }, [quill]);
 
+  const handleChange = (e) => {
+    setDoc({ ...doc, name: e.target.value });
+    updateInfo({ name: e.target.value });
+  };
+
   return (
     <section>
-      <nav className="flex justify-between items-center px-4">
+      <nav className="flex justify-between items-center px-4 navbar-g">
         <div className="flex items-center">
           <Link to={"/document"}>
             <img src="/images/Home/logo.png" className="w-16" alt="" />
@@ -104,8 +120,10 @@ const Editor = () => {
             <div className="flex items-center gap-x-2">
               <input
                 type="text"
-                value={doc.name}
+                value={doc.name || "Untitled document"}
                 className="min-w-[5rem] px-1 capitalize"
+                maxLength={20}
+                onChange={(e) => handleChange(e)}
               />
               <FaRegStar />
               <FaRegFolder />

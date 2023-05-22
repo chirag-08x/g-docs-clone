@@ -49,8 +49,29 @@ body {
 }
 
 @media print {
-  .ql-snow.ql-toolbar {
+  .ql-snow.ql-toolbar,
+  .navbar-g {
     display: none;
+  }
+
+  @page {
+    margin: 0;
+    size: 8.27in 11.69in;
+  }
+
+  body {
+    margin: 0;
+  }
+
+  header,
+  footer,
+  .date {
+    display: none;
+  }
+
+  #container .ql-editor {
+    border: none;
+    margin: 0;
   }
 }
 

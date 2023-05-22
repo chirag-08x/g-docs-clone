@@ -38,7 +38,13 @@ const RecentDoc = () => {
                     key={_id}
                     className="border-gray-secondary2 border-[1.5px] rounded-md hover:border-blue-primary hover:border-[1px]"
                   >
-                    <div className="h-52 md:h-40 xl:h-64"></div>
+                    <div className="h-52 md:h-40 xl:h-64 grid place-items-center">
+                      <img
+                        src="/images/Home/logo.png"
+                        className="w-28 md:w-32"
+                        alt=""
+                      />
+                    </div>
                     <div className="flex justify-between px-3 py-4 border-gray-primary2 border-t-[1.5px]">
                       <div className="flex items-center gap-x-2">
                         <img

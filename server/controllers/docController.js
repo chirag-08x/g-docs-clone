@@ -83,7 +83,6 @@ const updateDoc = async (req, res) => {
 
 // Delete Document
 const deleteDocument = async (req, res) => {
-  console.log(req.params);
   try {
     await Docs.updateOne(
       { email: req.params.email },

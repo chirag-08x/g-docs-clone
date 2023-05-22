@@ -4,7 +4,7 @@ import { Navbar, NewDoc, RecentDoc } from "../components";
 import axios from "axios";
 
 const Home = () => {
-  const { logout, user } = useAuth0();
+  const { user } = useAuth0();
 
   const addNewUserToDB = async () => {
     const URL = `${process.env.REACT_APP_BASE_URL}/api/v1/users`;
@@ -17,7 +17,6 @@ const Home = () => {
       localStorage.setItem("user", JSON.stringify({ isLoggedIn: true }));
     } catch (error) {
       console.log(error);
-      // logout();
     }
   };
 
